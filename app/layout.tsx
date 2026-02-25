@@ -1,3 +1,5 @@
+// app>loyout.tsx
+
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Roboto } from 'next/font/google';
 import './globals.css';
@@ -23,23 +25,32 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://notehub.com'),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000'
+  ),
+
   title: 'NoteHub',
   description: 'NoteHub — app for creating, searching and managing notes.',
+
   openGraph: {
     title: 'NoteHub',
     description: 'NoteHub — app for creating, searching and managing notes.',
-    url: 'https://notehub.com',
-    images: ['https://ac.goit.global/fullstack/react/notehub-og-meta.jpg'],
+    url: '/',
+    images: [
+      {
+        url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'NoteHub',
+      },
+    ],
   },
 };
 
 export default function RootLayout({
   children,
-  modal,
 }: Readonly<{
   children: React.ReactNode;
-  modal: React.ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -50,7 +61,6 @@ export default function RootLayout({
           <Header />
           {children}
           <Footer />
-          {modal}
         </TanStackProvider>
       </body>
     </html>

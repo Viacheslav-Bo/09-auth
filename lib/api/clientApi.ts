@@ -1,15 +1,18 @@
-import axios from 'axios';
+// lib>api>clientApi.ts
+
 import type { Note, NoteTag } from '@/types/note';
+import { api } from './api';
 
-// ----------------------------------ENDPOINT---------------------------------------------
-const myKey = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
-
-const api = axios.create({
-  baseURL: 'https://notehub-public.goit.study/api',
-  headers: {
-    Authorization: `Bearer ${myKey}`,
-  },
-});
+// fetchNotes
+// fetchNoteById
+// createNote
+// deleteNote
+// register
+// login
+// logout
+// checkSession
+// getMe
+// updateMe
 
 // ----------------------------------GET-NOTES----------------------------------------------
 export interface GetNoteParams {
@@ -38,6 +41,7 @@ export const getNotes = async (
       ...(params.tag ? { tag: params.tag } : {}),
     },
   });
+  console.log('hello');
   return res.data;
 };
 

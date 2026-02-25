@@ -4,7 +4,7 @@
 import css from './NotesPage.module.css';
 
 import { useState } from 'react';
-import { getNotes, type GetNoteParams } from '@/lib/api';
+import { getNotes, type GetNoteParams } from '@/lib/api/clientApi';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useDebouncedCallback } from 'use-debounce';
 
@@ -77,7 +77,7 @@ function NotesClient({
 
       {isFetching && <p className={css.loading}>Loading…</p>}
 
-      {data && data.notes.length > 0 && <NoteList notes={data.notes} />}
+      {(data?.notes?.length ?? 0) > 0 && <NoteList notes={data?.notes ?? []} />}
 
       {/* {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
