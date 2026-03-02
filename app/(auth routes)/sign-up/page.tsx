@@ -1,34 +1,76 @@
-// <main className={css.mainContent}>
-//   <h1 className={css.formTitle}>Sign up</h1>
-//   <form className={css.form}>
-//     <div className={css.formGroup}>
-//       <label htmlFor="email">Email</label>
-//       <input
-//         id="email"
-//         type="email"
-//         name="email"
-//         className={css.input}
-//         required
-//       />
-//     </div>
+'use client';
 
-//     <div className={css.formGroup}>
-//       <label htmlFor="password">Password</label>
-//       <input
-//         id="password"
-//         type="password"
-//         name="password"
-//         className={css.input}
-//         required
-//       />
-//     </div>
+import css from './SignUpPage.module.css';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { register, RegisterRequest } from '@/lib/api/clientApi';
+import { ApiError } from '@/app/api/api';
+import { useAuthStore } from '@/lib/store/authStore';
 
-//     <div className={css.actions}>
-//       <button type="submit" className={css.submitButton}>
-//         Register
-//       </button>
-//     </div>
+const SignUp = () => {
+  const router = useRouter();
+  const [error, setError] = useState('');
 
-//     <p className={css.error}>Error</p>
-//   </form>
-// </main>;
+  const setUser = useAuthStore(state => state.setUser);
+
+  const handleSubmit = async (formData: FormData) => {
+    try {
+      // Типізуємо дані форми
+      const formValues = Object.fromEntries(formData) as RegisterRequest;
+      // Виконуємо запит
+      const res = await register(formValues);
+      // Виконуємо редірект або відображаємо помилку
+      if (res) {
+        router.push('/profile');
+        setUser(res);
+      } else {
+        setError('Invalid email or password');
+      }
+    } catch (error) {
+      setError(
+        (error as ApiError).response?.data?.error ??
+          (error as ApiError).message ??
+          'Oops... some error'
+      );
+    }
+  };
+  return (
+    <main className={css.mainContent}>
+      <h1 className={css.formTitle}>Sign up</h1>
+      <form action={handleSubmit} className={css.form}>
+        <div className={css.formGroup}>
+          <label htmlFor="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            className={css.input}
+            required
+          />
+        </div>
+
+        <div className={css.formGroup}>
+          <label htmlFor="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            name="password"
+            className={css.input}
+            required
+          />
+        </div>
+
+        <div className={css.actions}>
+          <button type="submit" className={css.submitButton}>
+            Register
+          </button>
+        </div>
+
+        <p className={css.error}>Error</p>
+      </form>
+      {error && <p className={css.error}>{error}</p>}
+    </main>
+  );
+};
+
+export default SignUp;
