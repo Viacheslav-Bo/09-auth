@@ -1,6 +1,6 @@
 // app/notes/[id]/page.tsx
 
-import { getNoteById } from '@/lib/api/clientApi';
+import { getNoteById } from '@/lib/api/serverApi';
 import NoteDetailsClient from './NoteDetails.client';
 import {
   QueryClient,

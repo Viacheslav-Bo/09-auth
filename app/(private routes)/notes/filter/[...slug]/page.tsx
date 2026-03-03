@@ -5,8 +5,9 @@ import {
   HydrationBoundary,
   dehydrate,
 } from '@tanstack/react-query';
-import { getNotes, type GetNoteParams } from '@/lib/api/clientApi';
+import { getNotes } from '@/lib/api/serverApi';
 import { type NoteTag } from '@/types/note';
+import { type GetNoteParams } from '@/lib/api/clientApi';
 import NotesClient from './Notes.client';
 import type { Metadata } from 'next';
 
@@ -49,7 +50,8 @@ export default async function NotesByCategory({ params }: NotesByCatgoryProps) {
 
   await queryClient.prefetchQuery({
     queryKey: ['notes', initialParams],
-    queryFn: () => getNotes(initialParams),
+    queryFn: () =>
+      getNotes(initialParams.page, initialParams.search, initialParams.tag),
   });
 
   return (

@@ -4,6 +4,7 @@ import { nextServer } from './api';
 import type { User } from '@/types/user';
 import { Note } from '@/types/note';
 import { cookies } from 'next/headers';
+import type { GetNoteParams } from '@/lib/api/clientApi';
 
 // fetchNotes
 // fetchNoteById
@@ -71,4 +72,10 @@ export async function checkServerSession() {
   });
 
   return res;
+}
+
+export async function getNotesByParams(
+  params: GetNoteParams
+): Promise<FetchNotesResponse> {
+  return getNotes(params.page, params.search, params.tag);
 }
