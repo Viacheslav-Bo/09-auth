@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'User profile | NoteHub',
     description: 'Your profile page',
-    url: '/profile', // metadataBase підставиться автоматично
+    url: '/profile',
     images: [
       {
         url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
@@ -38,7 +38,7 @@ export default async function Profile() {
 
         <div className={css.avatarWrapper}>
           <Image
-            src={'/default-avatar.png'}
+            src={user.avatar ?? '/default-avatar.png'}
             alt="User Avatar"
             width={120}
             height={120}
@@ -47,7 +47,7 @@ export default async function Profile() {
         </div>
 
         <div className={css.profileInfo}>
-          <p>Username: {user.userName}</p>
+          <p>Username: {user.username}</p>
           <p>Email: {user.email}</p>
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 import type { Note, NoteTag } from '@/types/note';
 import { nextServer } from './api';
-import { User } from '@/types/user';
+import { type User } from '@/types/user';
 
 // fetchNotes
 // fetchNoteById
@@ -94,7 +94,11 @@ export type LoginRequest = {
 };
 
 export const login = async (data: LoginRequest) => {
-  const res = await nextServer.post<User>('/auth/login', data);
+  const res = await nextServer.post<User>('/auth/login', data, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
   return res.data;
 };
 // -----------------------------------REGISTER------------------------------------------------
@@ -106,7 +110,11 @@ export type RegisterRequest = {
 };
 
 export const register = async (data: RegisterRequest) => {
-  const res = await nextServer.post<User>('/auth/register', data);
+  const res = await nextServer.post<User>('/auth/register', data, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
   return res.data;
 };
 // -----------------------------------LOGOUT------------------------------------------------
@@ -117,7 +125,7 @@ export const logout = async (): Promise<void> => {
 
 export const checkSession = async (): Promise<boolean> => {
   try {
-    await nextServer.get('/users/me');
+    await nextServer.get('/auth/session');
     return true;
   } catch {
     return false;
@@ -128,3 +136,12 @@ export const getMe = async () => {
   const { data } = await nextServer.get<User>('/users/me');
   return data;
 };
+
+export type UpdateUserPayload = {
+  username?: string;
+};
+
+export async function updateMe(payload: UpdateUserPayload) {
+  const res = await nextServer.patch<User>('/users/me', payload);
+  return res.data;
+}
