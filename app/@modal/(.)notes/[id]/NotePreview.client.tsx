@@ -1,3 +1,4 @@
+//app>@modal>(.)notes>[id]>NotePreview.client
 'use client';
 
 import css from './NotePreview.module.css';
