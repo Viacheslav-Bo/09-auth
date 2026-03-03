@@ -43,7 +43,6 @@ export const getNotes = async (
       ...(params.tag ? { tag: params.tag } : {}),
     },
   });
-  console.log('hello');
   return res.data;
 };
 
