@@ -1,8 +1,10 @@
+// app > (private routes) > notes > filter > layout
+
 import css from './LayoutNotes.module.css';
 
 interface FilteredLayoutProps {
   children: React.ReactNode;
-  sidebar: React.ReactNode;
+  sidebar?: React.ReactNode;
 }
 
 export default function FilteredLayout({
@@ -11,7 +13,7 @@ export default function FilteredLayout({
 }: FilteredLayoutProps) {
   return (
     <div className={css.container}>
-      <aside className={css.sidebar}>{sidebar}</aside>
+      <aside className={css.sidebar}>{sidebar ?? null}</aside>
       <div className={css.notesWrapper}>{children}</div>
     </div>
   );
