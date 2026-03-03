@@ -105,15 +105,11 @@ export const login = async (data: LoginRequest) => {
 export type RegisterRequest = {
   email: string;
   password: string;
-  userName: string;
+  username: string;
 };
 
 export const register = async (data: RegisterRequest) => {
-  const res = await nextServer.post<User>('/auth/register', data, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  const res = await nextServer.post<User>('/auth/register', data);
   return res.data;
 };
 // -----------------------------------LOGOUT------------------------------------------------

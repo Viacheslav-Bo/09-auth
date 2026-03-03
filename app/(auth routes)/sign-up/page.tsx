@@ -14,6 +14,7 @@ const SignUp = () => {
   const setUser = useAuthStore(state => state.setUser);
 
   const handleSubmit = async (formData: FormData) => {
+    setError('');
     try {
       // Типізуємо дані форми
       const formValues = Object.fromEntries(formData) as RegisterRequest;
@@ -66,9 +67,8 @@ const SignUp = () => {
           </button>
         </div>
 
-        <p className={css.error}>Error</p>
+        {error && <p className={css.error}>{error}</p>}
       </form>
-      {error && <p className={css.error}>{error}</p>}
     </main>
   );
 };

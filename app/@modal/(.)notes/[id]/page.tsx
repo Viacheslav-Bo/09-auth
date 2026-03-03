@@ -1,7 +1,7 @@
 import NotePreviewClient from './NotePreview.client';
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
 import { getQueryClient } from '@/lib/api/getQueryClient';
-import { getNoteById } from '@/lib/api/clientApi';
+import { getNoteById } from '@/lib/api/serverApi';
 
 export default async function Page({
   params,
